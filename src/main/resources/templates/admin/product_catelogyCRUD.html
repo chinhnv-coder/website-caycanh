@@ -1,0 +1,180 @@
+<main class="container mt-3">
+  <h3>Danh mục sản phẩm</h3>
+  <hr />
+
+  <!-- Tab Navigation -->
+  <ul class="nav nav-tabs" id="flowerTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="edit-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#edit"
+        type="button"
+        role="tab"
+        aria-controls="edit"
+        aria-selected="true"
+      >
+        Chỉnh sửa
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="list-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#list"
+        type="button"
+        role="tab"
+        aria-controls="list"
+        aria-selected="false"
+      >
+        Danh sách
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content" id="flowerTabContent">
+    <!-- Tab: Chỉnh sửa -->
+    <div
+      class="tab-pane fade show active"
+      id="edit"
+      role="tabpanel"
+      aria-labelledby="edit-tab"
+    >
+      <form
+        action="/admin/category/index"
+        method="post"
+        th:object="${category}"
+      >
+        <div class="row">
+          <div class="col-6">
+            <div class="mb-1">
+              <label for="id" class="form-label">ID</label>
+              <input
+                th:field="*{id}"
+                type="text"
+                name="id"
+                id="id"
+                class="form-control form-control-sm"
+                placeholder="ID Loại Cây"
+                th:readonly="${category.id != null}"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="mb-1">
+              <label for="name" class="form-label">Tên Danh Mục</label>
+              <input
+                th:field="*{name}"
+                type="text"
+                name="name"
+                id="name"
+                class="form-control form-control-sm"
+                placeholder="Tên Danh Mục"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4 text-end">
+          <div class="col">
+            <button
+              class="btn btn-sm btn-primary"
+              formaction="/admin/category/create"
+            >
+              <i class="fa fa-plus"></i> Create
+            </button>
+            <button
+              class="btn btn-sm btn-warning"
+              formaction="/admin/category/update"
+            >
+              <i class="fa fa-edit"></i> Update
+            </button>
+            <a
+              class="btn btn-sm btn-danger"
+              th:href="@{|/admin/category/delete/${category.id}|}"
+              onclick="return confirm('Bạn có chắc muốn xóa?')"
+            >
+              <i class="fa fa-trash"></i> Delete
+            </a>
+            <a href="/admin/category/index" class="btn btn-sm btn-success">
+              <i class="fa fa-sync"></i> Reset
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tab: Danh sách -->
+    <div
+      class="tab-pane fade"
+      id="list"
+      role="tabpanel"
+      aria-labelledby="list-tab"
+    >
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Tên Danh mục</th>
+              <th>Hành Động</th>
+            </tr>
+          </thead>
+          <tbody th:each="category : ${categories}">
+            <tr>
+              <td th:text="${category.id}"></td>
+              <td th:text="${category.name}"></td>
+              <td>
+                <a
+                  class="btn btn-sm btn-info"
+                  th:href="@{|/admin/category/edit/${category.id}|}"
+                  ><i class="fa fa-edit"></i> Sửa</a
+                >
+                <a
+                  th:href="@{|/admin/category/delete/${category.id}|}"
+                  class="btn btn-sm btn-danger"
+                  onclick="return confirm('Bạn có chắc muốn xóa?')"
+                >
+                  <i class="fa fa-trash"></i> Xóa
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  window.onload = function () {
+    let success = "[[${success}]]";
+    let error = "[[${error}]]";
+
+    if (success && success !== "null") {
+      Swal.fire({
+        icon: "success",
+        title: "Thành công!",
+        text: success,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+
+    if (error && error !== "null") {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi!",
+        text: error,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+  };
+</script>

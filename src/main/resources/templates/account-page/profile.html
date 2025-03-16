@@ -1,0 +1,115 @@
+<main class="container d-flex justify-content-center mt-5 mb-5">
+  <form
+    id="editProfileForm"
+    action="/account/edit-profile"
+    method="post"
+    th:object="${account}"
+  >
+    <div class="card" style="width: 600px">
+      <div class="card-body border bg-success-subtle">
+        <h5 class="card-title text-dark fw-bolder fs-4 text-center">
+          Edit Profile
+        </h5>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="p-2">
+            <label for="username" class="form-label">Username</label>
+            <input
+              th:field="*{username}"
+              type="text"
+              class="form-control form-control-sm"
+              name="username"
+              id="username"
+              placeholder="Vui lòng nhập username"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="p-2">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control form-control-sm"
+              name="password"
+              id="password"
+              placeholder="Nhập mật khẩu mới(nếu có)"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="p-2">
+            <label for="fullname" class="form-label">Fullname</label>
+            <input
+              th:field="*{fullname}"
+              type="text"
+              class="form-control form-control-sm"
+              name="fullname"
+              id="fullname"
+              placeholder="Vui lòng nhập fullname"
+            />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="p-2">
+            <label for="email" class="form-label">Email Address</label>
+            <input
+              th:field="*{email}"
+              type="email"
+              class="form-control form-control-sm"
+              name="email"
+              id="email"
+              placeholder="Vui lòng nhập Email Address"
+            />
+          </div>
+        </div>
+        <div class="ms-3 mb-2">
+          <button
+            type="button"
+            class="btn btn-sm btn-danger"
+            onclick="window.location.href='/home'"
+          >
+            <i class="fa fa-times me-2"></i>Hủy bỏ
+          </button>
+          <button type="submit" class="btn btn-sm btn-primary">
+            <i class="fa fa-refresh me-2"></i>Cập nhật
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  window.onload = function () {
+    let success = "[[${success}]]";
+    let error = "[[${error}]]";
+
+    if (success && success !== "null") {
+      Swal.fire({
+        icon: "success",
+        title: "Thành công!",
+        text: success,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+
+    if (error && error !== "null") {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi!",
+        text: error,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+  };
+</script>

@@ -1,0 +1,150 @@
+<div class="container mt-4 mb-4">
+  <div class="row">
+    <!-- Form Đặt Hàng -->
+    <form
+      action="/payment/checkout"
+      method="post"
+      class="row"
+      th:object="${user}"
+    >
+      <!-- Cột Thông tin Đặt hàng -->
+      <div class="col-md-7">
+        <div class="card p-4 mb-4">
+          <h4 class="mb-3">Thông Tin Người Đặt Hàng</h4>
+          <div class="mb-3">
+            <label for="fullname" class="form-label">Họ và tên *</label>
+            <input
+              type="text"
+              name="fullname"
+              id="fullname"
+              class="form-control"
+              placeholder="Nhập họ và tên"
+              th:field="*{fullname}"
+              readonly
+            />
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Địa chỉ *</label>
+            <input
+              type="text"
+              name="address"
+              id="address"
+              class="form-control"
+              placeholder="Nhập địa chỉ"
+              required
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Cột Đơn hàng & Thanh toán -->
+      <div class="col-md-5">
+        <div class="card p-4 mb-4">
+          <h4 class="mb-3">Đơn Hàng Của Bạn</h4>
+          <div th:each="item : ${cartItems}">
+            <p>
+              <span th:text="${item.product.name}"></span> x
+              <span th:text="${item.qty}"></span>
+              <span
+                class="float-end"
+                th:text="${#numbers.formatDecimal(item.qty * item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+              ></span>
+            </p>
+          </div>
+          <hr />
+          <p>
+            <strong>Tổng cộng:</strong>
+            <span
+              class="float-end"
+              th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+            ></span>
+          </p>
+        </div>
+
+        <div class="card p-4 mb-4">
+          <h4 class="mb-3">Phương Thức Thanh Toán</h4>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="payment"
+              value="Chuyển khoản ngân hàng"
+              id="bank"
+              checked
+            />
+            <label class="form-check-label" for="bank"
+              >Chuyển khoản ngân hàng</label
+            >
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="payment"
+              value="MoMo"
+              id="momo"
+            />
+            <label class="form-check-label" for="momo">Quét Mã MoMo</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="payment"
+              value="ZaloPay"
+              id="zalo"
+            />
+            <label class="form-check-label" for="zalo"
+              >Quét Mã QR ZaloPay</label
+            >
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="payment"
+              value="COD"
+              id="cod"
+            />
+            <label class="form-check-label" for="cod"
+              >Trả tiền mặt khi nhận hàng (COD)</label
+            >
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">ĐẶT HÀNG</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  window.onload = function () {
+    let success = "[[${success}]]";
+    let error = "[[${error}]]";
+
+    if (success && success !== "null") {
+      Swal.fire({
+        icon: "success",
+        title: "Thành công!",
+        text: success,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+
+    if (error && error !== "null") {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi!",
+        text: error,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+  };
+</script>

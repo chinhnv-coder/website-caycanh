@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <div class="row align-items-center">
+    <div class="col-3"></div>
+    <div class="col-6 text-center">
+      <a class="navbar-brand" href="/home">
+        <img th:src="@{/images/logo.png}" alt="Trạm Hoa" height="80" />
+      </a>
+    </div>
+    <div class="col-3 d-flex justify-content-end align-items-center">
+      <a href="/cart" class="btn">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </a>
+      <div class="dropdown ms-2">
+        <button
+          class="btn dropdown-toggle px-2"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-user"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li th:if="${session.user != null}">
+            <a class="dropdown-item" href="/order/index">Đơn hàng</a>
+          </li>
+          <li th:if="${session.user != null}">
+            <a class="dropdown-item" href="/account/edit-profile">Hồ sơ</a>
+            <a class="dropdown-item" href="/account/change-password"
+              >Đổi mật khẩu</a
+            >
+          </li>
+          <li th:if="${session.user != null and session.user?.admin}">
+            <a class="dropdown-item" href="/admin/account/index">Quản trị</a>
+          </li>
+          <li th:if="${session.user != null}">
+            <a class="dropdown-item text-danger" href="/auth/logout"
+              >Đăng xuất</a
+            >
+          </li>
+          <li th:unless="${session.user != null}">
+            <hr class="dropdown-divider" />
+            <a href="/auth/login" class="dropdown-item">Đăng nhập</a>
+            <a href="/account/sign-up" class="dropdown-item">Đăng ký</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phóng To Hình Ảnh</title>
+
+    <style>
+      .zoom-btn {
+        position: absolute;
+        bottom: 10px;
+        left: 22px;
+        background-color: #17a2b8;
+        color: white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+      .zoom-btn:hover {
+        background-color: #138496;
+      }
+      .img-fluid {
+        cursor: pointer;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .product {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .product-title {
+        color: #009688;
+        font-weight: bold;
+      }
+
+      .product-color i {
+        color: #009688;
+      }
+
+      .product-price {
+        font-weight: bold;
+        font-size: 24px;
+        color: black;
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .btn-order {
+        background-color: #009688;
+        color: white;
+        font-weight: bold;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        width: 200px;
+      }
+
+      .btn-order:hover {
+        background-color: #00796b;
+      }
+
+      .btn-order i {
+        margin-right: 5px;
+      }
+
+      .btn-cart {
+        background-color: #28a745;
+        color: white;
+        font-weight: bold;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        width: 200px;
+      }
+
+      .btn-cart:hover {
+        background-color: #218838;
+      }
+
+      .star-link {
+        text-decoration: none;
+        color: #009688;
+        font-size: 18px;
+      }
+
+      .star-link:hover {
+        color: #00796b;
+      }
+
+      .btn-cart i {
+        margin-right: 5px;
+      }
+
+      .custom-card h4 {
+        font-size: 14px;
+        color: #009688;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      .custom-card p {
+        line-height: 1.2;
+        text-align: left;
+        font-size: 0.8rem;
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+
+      .custom-card ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      .custom-card ul li {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+      }
+
+      .custom-card ul li i {
+        color: #009688;
+        margin-right: 10px;
+      }
+
+      .divider {
+        width: 50px;
+        height: 3px;
+        background-color: #ddd;
+        margin: 10px auto;
+      }
+
+      .text-highlight {
+        color: #009688;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .custom-card ul li i {
+        font-size: 0.8rem;
+        margin-right: 8px;
+      }
+
+      p {
+        color: #666666;
+      }
+
+      .accordion-button {
+        color: #666666;
+        background-color: #f8f9fa;
+      }
+
+      .accordion-button:not(.collapsed) {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .accordion-body {
+        color: #666666;
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .accordion-button {
+        background-color: #fff;
+        border-top: 2px solid #ddd;
+        position: relative;
+        padding-left: 35px;
+      }
+
+      .accordion-button:hover {
+        color: #009688;
+      }
+
+      /* Mũi tên bên trái */
+      .accordion-button::before {
+        content: "\f107";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 10px;
+        transition: transform 0.3s ease;
+      }
+
+      .accordion-button:not(.collapsed)::before {
+        transform: rotate(180deg);
+      }
+
+      .accordion-item {
+        border: none;
+      }
+
+      .accordion-button::after {
+        display: none !important;
+      }
+
+      .hinhanh img {
+        max-width: 500px;
+      }
+
+      /* Định dạng phần đánh giá */
+      .accordion-item {
+        background: white;
+      }
+
+      /* Tiêu đề đánh giá */
+      h4 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      /* Bố cục đánh giá */
+      .commentlist {
+        list-style: none;
+        padding: 0;
+      }
+
+      .review-item {
+        border-bottom: 1px solid #ddd;
+        padding: 15px 0;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Avatar người đánh giá */
+      .review-avatar img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+
+      /* Nội dung đánh giá */
+      .comment-container {
+        display: flex;
+        align-items: center;
+      }
+
+      .review-content {
+        flex-grow: 1;
+      }
+
+      /* Định dạng ngôi sao */
+      .star-rating {
+        font-size: 16px;
+        color: #009688;
+      }
+
+      /* Thông tin người đánh giá */
+      .meta {
+        font-size: 14px;
+        color: #666;
+        margin: 5px 0;
+      }
+
+      .review-author {
+        font-weight: bold;
+        color: #333;
+      }
+
+      .review-date {
+        color: #888;
+        font-size: 12px;
+      }
+
+      /* Định dạng nội dung đánh giá */
+      .review-text {
+        font-size: 14px;
+        color: #333;
+        margin-top: 5px;
+      }
+
+      .star-rating i {
+        margin-right: -2px; /* Làm sát icon sao */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-5 position-relative">
+          <img
+            th:src="@{'/photos/' + ${product.image}}"
+            id="mainImage"
+            alt="Hoa Tương Tư"
+            class="img-fluid rounded-3"
+            data-bs-toggle="modal"
+            data-bs-target="#imageModal"
+          />
+
+          <!-- Nút phóng to -->
+          <div
+            class="zoom-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#imageModal"
+          >
+            <i class="fas fa-expand-alt"></i>
+          </div>
+        </div>
+        <div class="col-md-5 product">
+          <h4 class="product-title" th:text="${product.name}">
+            Cây Đuôi Công Thủy Sinh
+          </h4>
+          <p>Mã: <span th:text="${product.id}"></span></p>
+          <a href="#reviews" class="star-link">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </a>
+          <p class="product-price">
+            <span
+              th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"
+            ></span>
+            VND
+          </p>
+          <div class="button-group">
+            <form th:action="@{'/cart/add?id=' + ${product.id}}" method="post">
+              <button type="submit" class="btn btn-sm btn-cart">
+                <i class="fas fa-shopping-cart"></i> THÊM VÀO GIỎ HÀNG
+              </button>
+            </form>
+            <button
+              class="btn-order btn btn-sm"
+              onclick="location.href='/cart/index'"
+            >
+              <i class="fas fa-spa"></i>ĐẶT HÀNG
+            </button>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <p>Mẫu cây vừa xem</p>
+        </div>
+      </div>
+      <div class="accordion mt-5 mt-5" id="productAccordion">
+        <!-- Mô tả -->
+        <div class="accordion-item rounded-0">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button rounded-0"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseOne"
+            >
+              Mô tả
+            </button>
+          </h2>
+          <div
+            id="collapseOne"
+            class="accordion-collapse collapse show"
+            data-bs-parent="#productAccordion"
+          >
+            <div class="accordion-body">
+              <p th:text="${product.description}"></p>
+              <p class="hinhanh d-flex justify-content-center">
+                <img
+                  th:src="@{'/photos/' + ${product.image}}"
+                  alt=""
+                  class="card-img-top"
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Đánh giá -->
+        <div class="accordion-item rounded-0">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed rounded-0"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseThree"
+            >
+              Đánh giá (3)
+            </button>
+          </h2>
+          <div
+            id="collapseThree"
+            class="accordion-collapse collapse"
+            data-bs-parent="#productAccordion"
+          >
+            <div class="accordion-body row">
+              <div class="col-md-7">
+                <h4 class="text-dark">
+                  3 đánh giá cho
+                  <span class="product-name">Cây Đuôi Công Thủy Sinh</span>
+                </h4>
+                <ol class="commentlist">
+                  <li class="review-item">
+                    <div class="comment-container">
+                      <div class="review-avatar">
+                        <img
+                          src="https://secure.gravatar.com/avatar/243ae3f73ccca3927fd8f14149f75936?s=60&d=mm&r=g"
+                          alt="Avatar"
+                        />
+                      </div>
+                      <div class="review-content">
+                        <div class="star-rating">
+                          <div class="star-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                          </div>
+                        </div>
+                        <p class="meta">
+                          <strong class="review-author">Quỳnh Giang</strong> -
+                          <time class="review-date">22/03/2023</time>
+                        </p>
+                        <p class="review-text">
+                          Tư vấn nhiệt tình, dịch vụ khá hài lòng.
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="review-item">
+                    <div class="comment-container">
+                      <div class="review-avatar">
+                        <img
+                          src="https://secure.gravatar.com/avatar/243ae3f73ccca3927fd8f14149f75936?s=60&d=mm&r=g"
+                          alt="Avatar"
+                        />
+                      </div>
+                      <div class="review-content">
+                        <div class="star-rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                        </div>
+                        <p class="meta">
+                          <strong class="review-author">Toàn</strong> -
+                          <time class="review-date">08/11/2023</time>
+                        </p>
+                        <p class="review-text">
+                          Giao đúng hẹn, đúng mẫu đăng. Cảm ơn shop.
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="review-item">
+                    <div class="comment-container">
+                      <div class="review-avatar">
+                        <img
+                          src="https://secure.gravatar.com/avatar/243ae3f73ccca3927fd8f14149f75936?s=60&d=mm&r=g"
+                          alt="Avatar"
+                        />
+                      </div>
+                      <div class="review-content">
+                        <div class="star-rating">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                        </div>
+                        <p class="meta">
+                          <strong class="review-author">Vũ Nguyễn</strong> -
+                          <time class="review-date">07/12/2023</time>
+                        </p>
+                        <p class="review-text">
+                          Cây tươi đẹp, nhân viên tư vấn nhiệt tình rất ok.
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+              <div class="col-md-5">
+                <div class="card p-4">
+                  <h4 class="fw-bold">Thêm đánh giá</h4>
+
+                  <!-- Đánh giá sao -->
+                  <div class="mb-3">
+                    <label class="form-label fw-bolder small"
+                      >Đánh giá của bạn
+                      <span class="text-danger">*</span></label
+                    >
+                    <div class="d-flex gap-1 star-rating">
+                      <i class="bi bi-star" data-value="1"></i>
+                      <i class="bi bi-star" data-value="2"></i>
+                      <i class="bi bi-star" data-value="3"></i>
+                      <i class="bi bi-star" data-value="4"></i>
+                      <i class="bi bi-star" data-value="5"></i>
+                    </div>
+                  </div>
+
+                  <!-- Nhận xét -->
+                  <div class="mb-3">
+                    <label for="comment" class="form-label fw-bolder small"
+                      >Nhận xét của bạn
+                      <span class="text-danger">*</span></label
+                    >
+                    <textarea
+                      id="comment"
+                      class="form-control"
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <!-- Tên và Email -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="name" class="form-label fw-bolder small"
+                        >Tên <span class="text-danger">*</span></label
+                      >
+                      <input
+                        id="name"
+                        type="text"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="email" class="form-label fw-bolder small"
+                        >Email <span class="text-danger">*</span></label
+                      >
+                      <input
+                        id="email"
+                        type="email"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Lưu thông tin -->
+                  <div class="form-check mt-3">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="saveInfo"
+                    />
+                    <label
+                      class="form-check-label fw-bolder small"
+                      for="saveInfo"
+                    >
+                      Lưu tên của tôi, email, và trang web trong trình duyệt này
+                      cho lần bình luận kế tiếp của tôi.
+                    </label>
+                  </div>
+
+                  <!-- Nút gửi -->
+                  <div class="d-flex justify-content-center">
+                    <button
+                      type="submit"
+                      class="btn btn-sm btn-primary w-25 mt-3 fw-bolder"
+                    >
+                      GỬI ĐI
+                    </button>
+                  </div>
+                </div>
+
+                <script>
+                  document.addEventListener("DOMContentLoaded", function () {
+                    const stars = document.querySelectorAll(".star-rating i");
+
+                    stars.forEach((star) => {
+                      star.addEventListener("click", function () {
+                        let rating = this.getAttribute("data-value");
+
+                        // Xóa class active tất cả sao
+                        stars.forEach((s) => s.classList.remove("active"));
+
+                        // Thêm class active cho các sao đã chọn
+                        for (let i = 0; i < rating; i++) {
+                          stars[i].classList.add("active");
+                        }
+                      });
+                    });
+                  });
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Bootstrap -->
+    <div
+      class="modal fade"
+      id="imageModal"
+      tabindex="-1"
+      aria-labelledby="imageModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <img
+              src="/images/cay-cung-dien-vang-255x255.jpg"
+              id="modalImage"
+              alt="cay-cung-dien-vang"
+              class="img-fluid rounded-3"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

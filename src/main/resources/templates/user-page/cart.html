@@ -1,0 +1,220 @@
+<div class="container my-5">
+  <div class="row">
+    <div th:if="${isEmptyCart}" class="text-center">
+      <p class="text-muted">Chưa có sản phẩm nào trong giỏ hàng.</p>
+      <a href="/home" class="btn btn-success fw-bold">
+        QUAY TRỞ LẠI CỬA HÀNG
+      </a>
+    </div>
+    <!-- Cột sản phẩm -->
+    <div th:unless="${isEmptyCart}" class="col-md-8 border-end">
+      <table class="table table-borderless align-middle">
+        <thead class="border-bottom">
+          <tr>
+            <th></th>
+            <th>SẢN PHẨM</th>
+            <th>GIÁ</th>
+            <th>SỐ LƯỢNG</th>
+            <th>TẠM TÍNH</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="item : ${cartItems}">
+            <td>
+              <form th:action="@{/cart/remove}" method="post">
+                <input type="hidden" name="id" th:value="${item.product.id}" />
+                <button type="submit" class="btn">
+                  <i class="fa-solid fa-xmark text-danger"></i>
+                </button>
+              </form>
+            </td>
+            <td class="d-flex align-items-center">
+              <a th:href="@{'/detail?id=' + ${item.product.id}}">
+                <img
+                  th:src="@{'/photos/' + ${item.product.image}}"
+                  class="rounded me-2"
+                  width="70"
+                  height="70"
+                  alt="Sản phẩm"
+                />
+              </a>
+              <a
+                th:href="@{'/detail?id=' + ${item.product.id}}"
+                class="text-decoration-none text-dark"
+              >
+                <span th:text="${item.product.name}"></span>
+              </a>
+            </td>
+            <td
+              class="price"
+              th:data-price="${item.product.price}"
+              th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+            ></td>
+            <td>
+              <form
+                th:action="@{/cart/update}"
+                method="post"
+                class="update-form"
+              >
+                <input type="hidden" name="id" th:value="${item.product.id}" />
+                <div class="d-flex align-items-center">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary qty-btn"
+                    data-type="minus"
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    name="qty"
+                    class="form-control text-center w-50 qty-input"
+                    th:value="${item.qty}"
+                    min="1"
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary qty-btn"
+                    data-type="plus"
+                  >
+                    +
+                  </button>
+                </div>
+              </form>
+            </td>
+            <td>
+              <span
+                class="subtotal"
+                th:text="${#numbers.formatDecimal(item.qty * item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+              ></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between">
+        <a href="/product" class="btn btn-outline-success fw-bold">
+          <i class="fa-solid fa-left-long"></i> TIẾP TỤC XEM SẢN PHẨM
+        </a>
+      </div>
+    </div>
+    <!-- Cột tổng cộng đơn hàng -->
+    <div th:if="${!isEmptyCart}" class="col-md-4">
+      <h6 class="fw-bold">TỔNG CỘNG GIỎ HÀNG</h6>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Tạm tính</span>
+          <strong id="total-price">0 VND</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Giao hàng</span>
+          <span class="text-muted">Nhập địa chỉ để tính phí</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Tổng</span>
+          <strong id="final-total">0 VND</strong>
+        </li>
+      </ul>
+      <form action="/payment/index" method="get">
+        <button type="submit" class="btn btn-success w-100 mt-3">
+          THANH TOÁN
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const qtyButtons = document.querySelectorAll(".qty-btn");
+    const quantityInputs = document.querySelectorAll(".qty-input");
+    const totalPriceElement = document.getElementById("total-price");
+    const finalTotalElement = document.getElementById("final-total");
+
+    function updateTotals() {
+      let total = 0;
+      document.querySelectorAll("tbody tr").forEach((row) => {
+        let qtyInput = row.querySelector(".qty-input");
+        let qty = parseInt(qtyInput.value) || 1;
+        let price = parseFloat(
+          row.querySelector(".price").getAttribute("data-price")
+        );
+        let subtotal = qty * price;
+        row.querySelector(".subtotal").innerText =
+          subtotal.toLocaleString() + " VND";
+        total += subtotal;
+      });
+      totalPriceElement.innerText = total.toLocaleString() + " VND";
+      finalTotalElement.innerText = total.toLocaleString() + " VND";
+    }
+
+    qtyButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        let input = this.closest(".d-flex").querySelector(".qty-input");
+        let form = this.closest(".update-form");
+        let currentValue = parseInt(input.value) || 1;
+        let type = this.getAttribute("data-type");
+
+        if (type === "plus") {
+          input.value = currentValue + 1;
+        } else if (type === "minus") {
+          if (currentValue > 1) {
+            input.value = currentValue - 1;
+          } else {
+            input.value = 0;
+            form.submit();
+            return;
+          }
+        }
+
+        updateTotals();
+        form.submit();
+      });
+    });
+
+    quantityInputs.forEach((input) => {
+      input.addEventListener("change", function () {
+        let form = this.closest(".update-form");
+        let qty = parseInt(this.value);
+        if (qty <= 0 || isNaN(qty)) {
+          this.value = 0;
+          form.submit();
+        } else {
+          updateTotals();
+          form.submit();
+        }
+      });
+    });
+    updateTotals();
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  window.onload = function () {
+    let success = "[[${success}]]";
+    let error = "[[${error}]]";
+
+    if (success && success !== "null") {
+      Swal.fire({
+        icon: "success",
+        title: "Thành công!",
+        text: success,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+
+    if (error && error !== "null") {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi!",
+        text: error,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+  };
+</script>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <link rel="stylesheet" href="/bootstrap-5.3.3-dist/css/bootstrap.min.css" />
+    <script src="/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css}"
+      rel="stylesheet"
+    />
+    <style type="text/css">
+      @charset "UTF-8";
+
+      .menu-item:hover {
+        background-color: #f3ae4d;
+        color: #fff !important;
+        border-radius: 5px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .search-bar {
+        background-color: #f1f3f4;
+        border-radius: 50px;
+      }
+
+      .search-bar input {
+        border: none;
+        background-color: transparent;
+        outline: none;
+      }
+
+      input.form-control:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 8px rgba(13, 110, 253, 0.5);
+      }
+
+      textarea.form-control {
+        resize: none;
+        outline: none;
+        border: 1px solid #ddd;
+        transition: box-shadow 0.2s ease-in-out;
+      }
+
+      textarea.form-control:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 8px rgba(13, 110, 253, 0.5);
+      }
+
+      textarea {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      label.btn {
+        cursor: pointer;
+        margin: 0;
+      }
+
+      .input-group {
+        background-color: #f8f9fa;
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      .btn-hover {
+        color: #f3ae4d;
+      }
+
+      .btn-hover:hover {
+        background-color: #7cb1e9;
+      }
+
+      .btn-outline-secondary:hover {
+        background-color: #ff9800 !important;
+        border-color: #ff9800 !important;
+        color: #fff !important;
+      }
+
+      .input-group {
+        background-color: #f8f9fa;
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      .form-floating .form-control {
+        border: none;
+        border-bottom: 2px solid #ff9800;
+        border-radius: 0;
+        outline: none;
+        box-shadow: none;
+      }
+
+      .form-floating .form-control:focus {
+        box-shadow: none !important;
+        border-bottom: 2px solid #ff4500;
+      }
+
+      .btn-outline-secondary:hover {
+        background-color: #ff9800 !important;
+        border-color: #ff9800 !important;
+        color: #fff !important;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      .btn-file {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .bodi {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .asidemana {
+        background-color: #f8f9fa;
+        padding: 10px;
+        box-sizing: border-box;
+        position: sticky;
+        top: 0;
+        overflow-y: auto;
+      }
+
+      .articlemana {
+        overflow-y: auto;
+        height: calc(100vh - 60px);
+        background-color: #fff;
+      }
+
+      .nenindex {
+        top: 60px;
+        bottom: 0;
+        left: 0;
+        width: 16.666%;
+        z-index: 500;
+        overflow-y: auto;
+        background: rgb(197, 184, 179);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="bodi">
+      <header th:insert="~{/admin/header}"></header>
+      <main th:insert="~{/admin/content}"></main>
+    </div>
+  </body>
+</html>

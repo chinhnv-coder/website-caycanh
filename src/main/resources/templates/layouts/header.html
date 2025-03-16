@@ -1,0 +1,165 @@
+<header
+  class="container-fluid"
+  style="background-color: #72c000; padding: 10px 0"
+>
+  <div class="row align-items-center">
+    <!-- Logo -->
+    <div class="col-md-3 text-center">
+      <a href="/home">
+        <img th:src="@{/images/logo.png}" alt="Cây Cảnh Hà Nội" height="70" />
+      </a>
+    </div>
+
+    <!-- Thanh tìm kiếm -->
+    <div class="col-md-5">
+      <form th:action="@{/product}" method="get" class="input-group">
+        <input
+          type="text"
+          name="keyword"
+          class="form-control"
+          th:value="${keyword}"
+          placeholder="Hôm nay bạn tìm cây gì?..."
+          style="border-radius: 20px 0 0 20px; padding: 8px 15px"
+        />
+        <button
+          class="btn"
+          type="submit"
+          style="background-color: #5c9e00; border-radius: 0 20px 20px 0"
+        >
+          <i class="fa-solid fa-magnifying-glass text-white"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Hotline và Giỏ hàng -->
+    <div
+      class="col-md-4 d-flex justify-content-end align-items-center"
+      style="padding-right: 40px"
+    >
+      <div class="text-white me-3">
+        <span style="font-size: 14px">Hotline tư vấn</span>
+        <div class="fw-bold fs-5">096.51.56.820</div>
+      </div>
+      <a
+        href="/cart/index"
+        class="btn position-relative"
+        style="
+          border: 2px solid white;
+          color: white;
+          border-radius: 8px;
+          padding: 5px 15px;
+        "
+      >
+        GIỎ HÀNG <i class="fa-solid fa-cart-shopping"></i>
+        <span
+          th:if="${totalQuantity > 0}"
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark"
+          th:text="${totalQuantity}"
+        >
+        </span>
+      </a>
+      <!-- Dropdown User -->
+      <div class="dropdown ms-2">
+        <button
+          class="btn dropdown-toggle text-white px-2"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-user"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li th:if="${session.user != null}">
+            <a class="dropdown-item" href="/order/index">Đơn hàng</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="/account/edit-profile">Hồ sơ</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="/account/change-password"
+              >Đổi mật khẩu</a
+            >
+          </li>
+
+          <!-- Chỉ hiển thị Quản trị nếu là Admin -->
+          <li th:if="${session.user != null and session.user.admin}">
+            <a class="dropdown-item" href="/admin/account/index">Quản trị</a>
+          </li>
+
+          <!-- Chỉ hiển thị Đăng xuất nếu đã đăng nhập -->
+          <li th:if="${session.user != null}">
+            <a class="dropdown-item text-danger" href="/auth/logout"
+              >Đăng xuất</a
+            >
+          </li>
+
+          <!-- Nếu chưa đăng nhập thì hiển thị Đăng nhập & Đăng ký -->
+          <li th:if="${session.user == null}">
+            <hr class="dropdown-divider" />
+            <a href="/auth/login" class="dropdown-item">Đăng nhập</a>
+            <a href="/account/sign-up" class="dropdown-item">Đăng ký</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="navbar navbar-expand-lg" style="background-color: #5c9e00">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-white fw-bold px-3"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Danh mục cây cảnh
+          </a>
+          <ul class="dropdown-menu">
+            <li th:each="category : ${categories}">
+              <a
+                class="dropdown-item"
+                th:href="@{'/product?category=' + ${category.id}}"
+                th:text="${category.name}"
+              ></a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold px-3" href="/home">Trang chủ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold px-3" href="#">Dịch vụ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold px-3" href="#"
+            >Cẩm nang cây cảnh</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold px-3" href="#">Tin tức</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold px-3" href="#">Chính sách</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

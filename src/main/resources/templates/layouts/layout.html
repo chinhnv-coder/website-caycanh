@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/bootstrap-5.3.3-dist/css/bootstrap.min.css" />
+    <script src="/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css}"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: Georgia, 'Times New Roman', Times, serif"
+      }
+      .mau{
+        color: #4CAF50;
+      }
+      .btn-cart, .btn-order{
+        font-size: 13px;
+        padding: 6px 12px;
+        height: 40px;
+        width: auto;
+      }
+      .custom-hover:hover {
+        background-color: #4CAF50;
+        color: white;
+        border-color: #4CAF50;
+      }
+      .mau2 {
+        color: rgb(41, 157, 207);
+      }
+      .carousel-inner {
+        height: 400px; /* Cố định chiều cao */
+      }
+
+      .carousel-item img {
+        width: 100vw;
+        height: 100%;
+        object-fit: cover;
+      }
+      .text-size {
+        font-size: large;
+      }
+      .text-size2 {
+        font-size: x-large;
+      }
+      .bg1 {
+        background: url(images/bg1.png) no-repeat top;
+        min-height: 300px;
+        background-size: contain;
+        padding: 15px 0;
+      }
+
+      .i-hand {
+        background: url(images/map-icons.png) no-repeat 0 -140px;
+        width: 93px;
+        height: 61px;
+        display: inline-block;
+      }
+
+      .full {
+        width: 100%;
+        float: left;
+      }
+
+      .font30 {
+        font-size: 30px;
+        line-height: 35px;
+      }
+
+      .text-center {
+        text-align: center !important;
+      }
+
+      .pb-3 {
+        padding-bottom: 1rem !important;
+      }
+
+      .cl_xanh6, .breadcrumb_last {
+        color: #5ba503;
+      }
+
+      .font20 {
+        font-size: 20px;
+      }
+
+      .d-inline {
+        display: inline !important;
+      }
+
+      .bg1 .tieuchi-3 span {
+        padding: 0px 5%;
+        margin: 10px 0;
+      }
+
+      .btn-explore {
+        background: #6a9b5f;
+        color: white;
+        padding: 12px 25px;
+        font-size: 18px;
+        border-radius: 5px;
+        text-transform: uppercase;
+        border: none;
+      }
+      .btn-explore:hover {
+        background: #4c6b44;
+      }
+      h2,
+      h3 {
+        font-size: 16px;
+        font-weight: bolder;
+      }
+
+      .filter-title {
+        font-weight: bold;
+        font-size: 16px;
+        color: #067862;
+      }
+
+      .filter-content {
+        font-size: 0.95em !important;
+      }
+
+      .filter-items {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .filter-item > a {
+        text-decoration: none;
+        color: #434343;
+      }
+
+      span.amount {
+        color: #111;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .color-circle {
+        width: 25px;
+        height: 25px;
+        display: inline-block;
+        border-radius: 50%;
+        border: none;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .color-circle:hover {
+        transform: scale(1.2);
+      }
+
+      .filter-items .filter-text a:hover {
+        color: #5247ee;
+        font-weight: bold;
+      }
+
+      .card-body {
+        padding: 0.5rem 0;
+      }
+
+      .product-title {
+        font-size: 1em;
+        transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+        cursor: pointer;
+      }
+
+      .product-title:hover {
+        transform: scale(1.03);
+        opacity: 0.8;
+      }
+
+      .hover-effect {
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .hover-effect:hover {
+        transform: scale(1.02);
+      }
+
+      /* Căn giữa phân trang */
+      .woocommerce-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      /* Thiết kế danh sách số trang */
+      .page-numbers {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* Thiết kế ô số trang */
+      .page-number {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border: 2px solid #bbb;
+        border-radius: 50%;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        color: #555;
+        transition: all 0.3s ease;
+      }
+
+      /* Hiệu ứng khi di chuột vào số trang */
+      .page-number:hover {
+        background-color: #20b2aa;
+        color: white;
+        border-color: #20b2aa;
+      }
+
+      /* Trang hiện tại */
+      .page-number.current {
+        background-color: #20b2aa;
+        color: white;
+        border-color: #20b2aa;
+      }
+
+      /* Thiết kế nút < và > */
+      .next,
+      .prev {
+        font-size: 22px;
+        border: 2px solid #bbb;
+        background: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #555;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      /* Hiệu ứng hover cho nút < và > */
+      .next:hover,
+      .prev:hover {
+        background-color: #20b2aa;
+        color: white;
+        border-color: #20b2aa;
+      }
+
+      .flowers {
+        font-weight: bolder;
+      }
+    </style>
+  </head>
+  <body>
+    <header th:insert="~{/layouts/header}"></header>
+    <main th:insert="~{${view}}"></main>
+    <footer th:insert="~{/layouts/footer}"></footer>
+  </body>
+</html>

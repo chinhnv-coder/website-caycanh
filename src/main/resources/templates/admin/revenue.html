@@ -1,0 +1,93 @@
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    font-family: "Arial", sans-serif;
+    background-color: #f1f8e9;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid #d4e157;
+  }
+
+  thead {
+    background-color: #8bc34a;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #ffffff;
+  }
+
+  th,
+  td {
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #e8f5e9;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f1f8e9;
+  }
+
+  td:nth-child(2),
+  td:nth-child(3),
+  td:nth-child(4),
+  td:nth-child(5),
+  td:nth-child(6) {
+    text-align: right;
+    font-weight: bold;
+    color: #388e3c;
+  }
+
+  h1 {
+    text-align: center;
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+</style>
+<main class="container mt-3">
+  <h1>Thống kê doanh thu theo sản phẩm</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Tên Sản phẩm</th>
+        <th>Tổng doanh thu</th>
+        <th>Tổng số lượng</th>
+        <th>Giá cao nhất</th>
+        <th>Giá thấp nhất</th>
+        <th>Giá trung bình</th>
+      </tr>
+    </thead>
+    <tbody>
+      <th:block th:each="report : ${revenueReports}">
+        <tr>
+          <td th:text="${report.group}"></td>
+          <td
+            th:text="${#numbers.formatDecimal(report.sum, 0, 'POINT', 0, 'COMMA')}"
+          ></td>
+          <td th:text="${report.count}"></td>
+          <td
+            th:text="${#numbers.formatDecimal(report.maxPrice, 0, 'POINT', 0, 'COMMA')}"
+          ></td>
+          <td
+            th:text="${#numbers.formatDecimal(report.minPrice, 0, 'POINT', 0, 'COMMA')}"
+          ></td>
+          <td
+            th:text="${#numbers.formatDecimal(report.avgPrice, 0, 'POINT', 0, 'COMMA')}"
+          ></td>
+        </tr>
+      </th:block>
+    </tbody>
+  </table>
+</main>

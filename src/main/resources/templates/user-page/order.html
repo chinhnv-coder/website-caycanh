@@ -1,0 +1,66 @@
+<main class="container d-flex justify-content-center mt-5 mb-5">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Mã đơn hàng</th>
+        <th>Địa chỉ nhận hàng</th>
+        <th>Ngày mua hàng</th>
+        <th>Tên sản phẩm</th>
+        <th>Số lượng</th>
+        <th>Tổng tiền</th>
+        <th>Chi tiết</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.address}"></td>
+        <td th:text="${#dates.format(order.createDate, 'dd/MM/yyyy')}"></td>
+        <td>
+          <ul class="list-unstyled">
+            <li
+              th:each="detail : ${order.orderDetails}"
+              th:text="${detail.product.name}"
+            ></li>
+          </ul>
+        </td>
+        <td th:text="${order.totalQuantity}"></td>
+        <td
+          th:text="${#numbers.formatDecimal(order.getTotalAmount(), 0, 'COMMA', 0, 'POINT')} + ' VND'"
+        ></td>
+        <td><a th:href="@{/order/detail/{id}(id=${order.id})}">Xem</a></td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  window.onload = function () {
+    let success = "[[${success}]]";
+    let error = "[[${error}]]";
+
+    if (success && success !== "null") {
+      Swal.fire({
+        icon: "success",
+        title: "Thành công!",
+        text: success,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+
+    if (error && error !== "null") {
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi!",
+        text: error,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+  };
+</script>

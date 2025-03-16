@@ -1,0 +1,87 @@
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    font-family: "Arial", sans-serif;
+    background-color: #f1f8e9;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid #d4e157;
+  }
+
+  thead {
+    background-color: #8bc34a;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #ffffff;
+  }
+
+  th,
+  td {
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #e8f5e9;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f1f8e9;
+  }
+
+  td:nth-child(2),
+  td:nth-child(3),
+  td:nth-child(4),
+  td:nth-child(5),
+  td:nth-child(6) {
+    text-align: right;
+    font-weight: bold;
+    color: #388e3c;
+  }
+
+  h1 {
+    text-align: center;
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+</style>
+<main class="container mt-3">
+  <h1>Top 10 khách hàng VIP</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Tên khách hàng</th>
+        <th>Tổng tiền đã mua</th>
+        <th>Ngày mua đầu tiên</th>
+        <th>Ngày mua sau cùng</th>
+      </tr>
+    </thead>
+    <tbody>
+      <th:block th:each="report : ${vipCustomerReports}">
+        <tr>
+          <td th:text="${report.customerName}"></td>
+          <td
+            th:text="${#numbers.formatDecimal(report.totalSpent, 0, 'POINT', 0, 'COMMA')}"
+          ></td>
+          <td
+            th:text="${#dates.format(report.firstPurchaseDate, 'yyyy-MM-dd')}"
+          ></td>
+          <td
+            th:text="${#dates.format(report.lastPurchaseDate, 'yyyy-MM-dd')}"
+          ></td>
+        </tr>
+      </th:block>
+    </tbody>
+  </table>
+</main>

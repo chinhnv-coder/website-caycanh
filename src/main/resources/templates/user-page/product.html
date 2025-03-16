@@ -1,0 +1,146 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <div></div>
+    <div>
+      <form>
+        <select
+          class="form-select form-select-sm mb-3"
+          name="orderby"
+          aria-label="Lọc sản phẩm"
+        >
+          <option value="popularity" selected>Mẫu cây bán chạy</option>
+          <option value="price">Giá thấp → cao</option>
+          <option value="price-desc">Giá cao → thấp</option>
+          <option value="date">Mẫu cây mới nhất</option>
+        </select>
+      </form>
+    </div>
+  </div>
+  <div class="col row align-items-start">
+    <aside class="card col-3 bg-light p-3 border-0">
+      <form>
+        <h3>Lọc sản phẩm</h3>
+        <!-- Mức gía -->
+        <div>
+          <h4 class="filter-title">Mức Giá</h4>
+          <div class="filter-content">
+            <ul class="filter-items">
+              <li class="filter-item">
+                <a
+                  href="#"
+                  rel="nofollow"
+                  role="button"
+                  data-range-min="0"
+                  data-range-max="500000"
+                  class="price-range"
+                >
+                  <span class="woocommerce-Price-amount amount"
+                    >0&nbsp;<span class="woocommerce-Price-currencySymbol"
+                      >VND</span
+                    ></span
+                  >
+                  -
+                  <span class="woocommerce-Price-amount amount"
+                    >500.000&nbsp;<span class="woocommerce-Price-currencySymbol"
+                      >VND</span
+                    ></span
+                  ></a
+                >
+              </li>
+              <li class="filter-item">
+                <a
+                  href="#"
+                  rel="nofollow"
+                  role="button"
+                  data-range-min="500000"
+                  data-range-max="1000000"
+                  class="price-range"
+                >
+                  <span class="woocommerce-Price-amount amount"
+                    >500.000&nbsp;<span class="woocommerce-Price-currencySymbol"
+                      >VND</span
+                    ></span
+                  >
+                  -
+                  <span class="woocommerce-Price-amount amount"
+                    >1.000.000&nbsp;<span
+                      class="woocommerce-Price-currencySymbol"
+                      >VND</span
+                    ></span
+                  ></a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </form>
+    </aside>
+    <article class="col-9">
+      <div class="row">
+        <div class="col-md-3" th:each="product : ${products}">
+          <div class="card border-0 text-center">
+            <a th:href="@{/detail(id=${product.id})}" class="d-block">
+              <img
+                th:src="@{|/photos/${product.image}|}"
+                alt="h1"
+                class="card-img-top rounded-3 hover-effect"
+              />
+            </a>
+            <div class="card-body p-2">
+              <span class="text-muted d-block small" th:text="${product.id}"
+                >H047</span
+              >
+              <a
+                th:href="@{/detail(id=${product.id})}"
+                class="text-decoration-none"
+              >
+                <h5
+                  class="fw-bold text-success product-title"
+                  th:text="${product.name}"
+                >
+                  Vững Vàng
+                </h5>
+              </a>
+              <p class="fw-bold text-dark small">
+                <span
+                  th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"
+                ></span>
+                VND
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <nav class="woocommerce-pagination" aria-label="Phân trang sản phẩm">
+          <ul class="page-numbers nav-pagination links text-center">
+            <li th:if="${currentPage > 0}">
+              <a
+                class="prev page-number"
+                th:href="@{/product(page=${currentPage - 1})}"
+              >
+                <i class="fas fa-angle-left"></i>
+              </a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+              <a
+                class="page-number"
+                th:href="@{/product(page=${i})}"
+                th:classappend="${i == currentPage} ? 'current' : ''"
+                th:text="${i + 1}"
+              ></a>
+            </li>
+            <li th:if="${currentPage < totalPages - 1}">
+              <a
+                class="next page-number"
+                th:href="@{/product(page=${currentPage + 1})}"
+              >
+                <i class="fas fa-angle-right"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </article>
+  </div>
+</div>

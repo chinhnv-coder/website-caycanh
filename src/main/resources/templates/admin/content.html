@@ -1,0 +1,36 @@
+<div class="container-fluid vh-100 pt-5 row">
+  <aside class="col-md-2 nenindex asidemana">
+    <div class="d-flex align-items-center">
+      <h5>Chinh!</h5>
+    </div>
+
+    <nav class="nav flex-column pt-2">
+      <a href="/home" class="nav-link text-dark py-3 menu-item">
+        <i class="fa-solid fa-file-lines me-2"></i> Trang chủ
+      </a>
+      <a href="/admin/account/index" class="nav-link text-dark py-3 menu-item">
+        <i class="fa-solid fa-user"></i> Người dùng
+      </a>
+      <a href="/admin/category/index" class="nav-link text-dark py-3 menu-item">
+        <i class="fa-solid fa-comments me-2"></i> Danh mục sản phẩm
+      </a>
+
+      <a href="/admin/product/index" class="nav-link text-dark py-3 menu-item">
+        <i class="fa-solid fa-heart me-2"></i> Sản phẩm
+      </a>
+      <a href="/admin/order/index" class="nav-link text-dark py-3 menu-item">
+        <i class="fa-solid fa-chart-bar me-2"></i> Đơn hàng
+      </a>
+      <a href="/admin/report/revenue" class="nav-link text-dark py-3 menu-item">
+        <i class="fa-solid fa-box me-2"></i> Thống kê Theo Loại Hàng
+      </a>
+      <a href="/admin/report/vip" class="nav-link text-dark py-3 menu-item">
+        <i class="fa-solid fa-users me-2"></i> Thống kê Khách Hàng VIP
+      </a>
+    </nav>
+  </aside>
+  <article id="content" class="col-md-10 articlemana">
+    <main th:insert="~{${view}}"></main>
+    <footer th:insert="~{/admin/footer}"></footer>
+  </article>
+</div>

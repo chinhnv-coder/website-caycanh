@@ -1,0 +1,134 @@
+<main class="container mt-3">
+  <h3>Quản Lý Loại Cây</h3>
+  <hr />
+
+  <!-- Tab Navigation -->
+  <ul class="nav nav-tabs" id="flowerTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="edit-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#edit"
+        type="button"
+        role="tab"
+        aria-controls="edit"
+        aria-selected="true"
+      >
+        Chỉnh sửa
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="list-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#list"
+        type="button"
+        role="tab"
+        aria-controls="list"
+        aria-selected="false"
+      >
+        Danh sách
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content" id="flowerTabContent">
+    <!-- Tab: Chỉnh sửa -->
+    <div
+      class="tab-pane fade show active"
+      id="edit"
+      role="tabpanel"
+      aria-labelledby="edit-tab"
+    >
+      <form action="#" method="post">
+        <div class="row">
+          <div class="col-6">
+            <div class="mb-1">
+              <label for="categoryId" class="form-label">ID</label>
+              <input
+                type="text"
+                name="categoryId"
+                id="categoryId"
+                class="form-control form-control-sm"
+                placeholder="ID Loại Cây"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="mb-1">
+              <label for="categoryName" class="form-label">Tên Loại Cây</label>
+              <input
+                type="text"
+                name="categoryName"
+                id="categoryName"
+                class="form-control form-control-sm"
+                placeholder="Tên Loại Cây"
+              />
+            </div>
+          </div>
+          <div class="mb-1">
+            <label for="" class="form-label">Mô tả</label>
+            <textarea
+              type="text"
+              name="mota"
+              id="mota"
+              class="form-control form-control-sm"
+              placeholder="Mô tả"
+            ></textarea>
+          </div>
+        </div>
+        <div class="row mt-4 text-end">
+          <div class="col">
+            <button class="btn btn-primary">
+              <i class="fa fa-plus"></i> Thêm
+            </button>
+            <button class="btn btn-warning">
+              <i class="fa fa-edit"></i> Cập Nhật
+            </button>
+            <button class="btn btn-danger">
+              <i class="fa fa-trash"></i> Xóa
+            </button>
+            <button class="btn btn-success">
+              <i class="fa fa-sync"></i> Làm Mới
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tab: Danh sách -->
+    <div
+      class="tab-pane fade"
+      id="list"
+      role="tabpanel"
+      aria-labelledby="list-tab"
+    >
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Tên Loại Cây</th>
+              <th>Mô Tả</th>
+              <th>Hành Động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td></td>
+              <td>Cây Đuôi Công Sinh Thủy</td>
+              <td>
+                <button class="btn btn-sm btn-info">Sửa</button>
+                <button class="btn btn-sm btn-danger">Xóa</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>

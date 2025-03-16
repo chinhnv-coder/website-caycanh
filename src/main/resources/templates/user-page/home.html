@@ -1,0 +1,135 @@
+<!-- slide -->
+<div class="text-center bg1 box mt-4">
+  <h1 class="font30">
+    <i class="i-hand"></i
+    ><span class="full text-center pb-3">Web cây cảnh</span>
+  </h1>
+
+  <div class="clearfix h20"></div>
+
+  <div class="d-inline text-center cl_xanh6 font20 tieuchi-3">
+    <span class="">Bán cây cảnh</span><span class="">Chăm sóc cây</span
+    ><span class="">Tư vấn thiết kế</span>
+  </div>
+</div>
+<!--  -->
+<div class="py-3" style="background-color: rgb(190, 235, 206)">
+  <h4 class="text-center text-danger fw-bold">Sản Phẩm Mới Nhất</h4>
+  <div class="d-flex justify-content-between">
+    <div class="text-center p-2" th:each="product : ${products}">
+      <a th:href="@{/detail(id=${product.id})}" class="d-block">
+        <img
+          th:src="@{/photos/{image}(image=${product.image})}"
+          class="rounded-circle py-2"
+          alt=""
+          width="130px"
+        />
+      </a>
+      <div class="card-body p-2">
+        <span class="text-muted d-block small" th:text="${product.id}"></span>
+        <a th:href="@{/detail(id=${product.id})}" class="text-decoration-none">
+          <h6
+            class="fw-bold text-success product-title"
+            th:text="${product.name}"
+          ></h6>
+        </a>
+        <p class="fw-bold text-dark small">
+          <span
+            th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"
+          ></span>
+          VND
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="py-3">
+  <h4 class="text-center mau fw-bold py-4">XƯƠNG RỒNG CẢNH</h4>
+  <div class="row">
+    <div class="col-md-2" th:each="product_xr : ${xuongRong}">
+      <div class="card border-0 text-center">
+        <a th:href="@{/detail(id=${product_xr.id})}" class="d-block">
+          <img
+            th:src="@{'/photos/' + ${product_xr.image}}"
+            alt="h1"
+            class="card-img-top rounded-3 hover-effect"
+          />
+        </a>
+        <div class="card-body p-2">
+          <span
+            class="text-muted d-block small"
+            th:text="${product_xr.id}"
+          ></span>
+          <a
+            th:href="@{/detail(id=${product_xr.id})}"
+            class="text-decoration-none"
+          >
+            <h6
+              class="fw-bold text-success product-title"
+              th:text="${product_xr.name}"
+            ></h6>
+          </a>
+          <p
+            class="fw-bold text-dark small"
+            th:text="${#numbers.formatDecimal(product_xr.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+          ></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  -->
+<div class="py-3">
+  <h4 class="text-center mau fw-bold py-4">CÂY THỦY SINH</h4>
+  <div class="row">
+    <div class="col-md-2" th:each="product_ts : ${thuySinh}">
+      <div class="card border-0 text-center">
+        <a th:href="@{/detail(id=${product_ts.id})}" class="d-block">
+          <img
+            th:src="@{'/photos/' + ${product_ts.image}}"
+            alt="h1"
+            class="card-img-top rounded-3 hover-effect"
+          />
+        </a>
+        <div class="card-body p-2">
+          <span
+            class="text-muted d-block small"
+            th:text="${product_ts.id}"
+          ></span>
+          <a
+            th:href="@{/detail(id=${product_ts.id})}"
+            class="text-decoration-none"
+          >
+            <h6
+              class="fw-bold text-success product-title"
+              th:text="${product_ts.name}"
+            ></h6>
+          </a>
+          <p
+            class="fw-bold text-dark small"
+            th:text="${#numbers.formatDecimal(product_ts.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+          ></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  window.onload = function () {
+    let success = "[[${success}]]";
+
+    if (success && success !== "null") {
+      Swal.fire({
+        icon: "success",
+        title: "Thành công!",
+        text: success,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
+  };
+</script>
